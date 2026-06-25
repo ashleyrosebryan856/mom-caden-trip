@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oregon with Mom & Caden · July 16–21, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mountain: #1F3040;
+    --slate:    #2D5A72;
+    --glacier:  #6BAEC4;
+    --snow:     #F2F0ED;
+    --birch:    #E8E2D8;
+    --bark:     #8C6B4A;
+    --ember:    #C4622D;
+    --cloud:    #FFFFFF;
+    --ink:      #1A1A1A;
+    --mist:     #6B7B72;
+    --peak-dark:#111C26;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--snow); color: var(--ink); line-height: 1.6; }
+
+  /* ── HERO ── */
+  .hero { background: var(--peak-dark); min-height: 100vh; display: grid; place-items: center; position: relative; overflow: hidden; padding: 60px 24px; }
+  .hero-rings { position: absolute; inset: 0; pointer-events: none; }
+  .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(107,174,196,0.15); }
+  .ring-1 { width: 600px; height: 600px; top: -150px; right: -150px; }
+  .ring-2 { width: 400px; height: 400px; top: -50px; right: -50px; }
+  .ring-3 { width: 800px; height: 800px; bottom: -300px; left: -300px; }
+  .mountain-svg { position: absolute; bottom: 0; left: 0; width: 100%; opacity: 0.12; pointer-events: none; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 720px; }
+  .hero-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--glacier); margin-bottom: 20px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 9vw, 88px); font-weight: 700; color: var(--snow); line-height: 1.0; margin-bottom: 8px; }
+  .hero-title em { font-style: italic; color: var(--glacier); }
+  .hero-sub { font-family: 'Playfair Display', serif; font-size: clamp(20px, 3vw, 28px); font-style: italic; color: var(--mist); margin-bottom: 36px; }
+  .hero-meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 48px; }
+  .hero-pill { background: rgba(45,90,114,0.35); border: 1px solid rgba(107,174,196,0.3); border-radius: 100px; padding: 8px 20px; font-size: 13px; color: var(--glacier); font-family: 'Space Mono', monospace; }
+  .hero-scroll { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--mist); font-size: 11px; font-family: 'Space Mono', monospace; letter-spacing: 0.1em; text-decoration: none; transition: color 0.2s; }
+  .hero-scroll:hover { color: var(--glacier); }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--glacier), transparent); }
+
+  /* ── FLIGHT BANNER ── */
+  .flight-banner { background: var(--mountain); padding: 28px 24px; display: flex; justify-content: center; flex-wrap: wrap; }
+  .flight-leg { display: flex; align-items: center; gap: 20px; padding: 0 32px; border-right: 1px solid rgba(107,174,196,0.2); }
+  .flight-leg:last-child { border-right: none; }
+  .leg-dir { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; color: var(--glacier); text-transform: uppercase; margin-bottom: 2px; }
+  .leg-route { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--snow); }
+  .leg-route span { color: var(--glacier); }
+  .leg-detail { font-size: 12px; color: var(--mist); margin-top: 2px; }
+  .leg-warning { background: rgba(196,98,45,0.15); border: 1px solid rgba(196,98,45,0.4); border-radius: 6px; padding: 4px 10px; font-size: 11px; color: var(--ember); font-family: 'Space Mono', monospace; white-space: nowrap; }
+
+  /* ── NAV ── */
+  .nav { background: var(--cloud); border-bottom: 1px solid var(--birch); position: sticky; top: 0; z-index: 100; padding: 0 24px; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-link { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 16px 18px; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .nav-link:hover { color: var(--mountain); border-color: var(--slate); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+  .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--slate); margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: var(--mountain); line-height: 1.1; margin-bottom: 8px; }
+  .section-intro { font-size: 16px; color: var(--mist); max-width: 600px; margin-bottom: 56px; line-height: 1.7; }
+  .section-alt { background: var(--birch); }
+
+  /* ── DAY CARDS ── */
+  .days-stack { display: grid; gap: 32px; }
+  .day-card { background: var(--cloud); border-radius: 20px; overflow: hidden; border: 1px solid var(--birch); }
+  .day-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; padding: 24px 32px; border-bottom: 1px solid var(--birch); background: var(--snow); }
+  .day-num { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; color: var(--birch); line-height: 1; }
+  .day-date { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--slate); text-transform: uppercase; margin-bottom: 4px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--mountain); }
+  .day-badges { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  .badge { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.12em; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+  .badge-lodging { background: var(--mountain); color: var(--glacier); }
+  .badge-dog { background: rgba(140,107,74,0.12); color: var(--bark); border: 1px solid rgba(140,107,74,0.3); }
+  .badge-alert { background: rgba(196,98,45,0.1); color: var(--ember); border: 1px solid rgba(196,98,45,0.3); }
+  .badge-confirmed { background: rgba(45,90,114,0.15); color: var(--slate); border: 1px solid rgba(45,90,114,0.3); }
+  .badge-nodog { background: rgba(107,174,196,0.1); color: var(--slate); border: 1px solid rgba(107,174,196,0.3); }
+
+  .day-body { padding: 8px 32px 28px; }
+
+  /* ── UNIFIED TIMELINE ── */
+  .timeline { display: grid; gap: 0; }
+  .tl-row { display: grid; grid-template-columns: 72px 20px 1fr; gap: 0 14px; align-items: stretch; }
+  .tl-time { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--mist); text-align: right; padding-top: 16px; line-height: 1.2; }
+  .tl-spine { display: flex; flex-direction: column; align-items: center; }
+  .tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 18px; position: relative; z-index: 1; }
+  .dot-sam   { background: var(--bark); border: 2px solid var(--cloud); }
+  .dot-plan  { background: var(--slate); border: 2px solid var(--cloud); }
+  .dot-fixed { background: var(--ember); border: 2px solid var(--cloud); }
+  .dot-nap   { background: var(--birch); border: 2px solid var(--cloud); }
+  .tl-line { flex: 1; width: 1px; background: var(--birch); min-height: 8px; }
+  .tl-content { padding: 12px 0 4px; }
+  .tl-sam .tl-content { display: flex; align-items: baseline; gap: 8px; padding: 13px 0 4px; }
+  .sam-label { font-size: 12px; color: var(--bark); line-height: 1.4; }
+  .sam-nap { font-size: 12px; color: var(--mist); font-style: italic; }
+  .tl-plan .tl-content { padding: 10px 0 12px; }
+  .tl-window-label { font-size: 13px; font-weight: 600; color: var(--mountain); margin-bottom: 6px; }
+  .tl-fixed-item { display: flex; gap: 7px; align-items: flex-start; margin-bottom: 8px; }
+  .fixed-badge { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .fb-confirmed { background: var(--mountain); color: var(--glacier); }
+  .fb-book { background: rgba(196,98,45,0.15); color: var(--ember); border: 1px solid rgba(196,98,45,0.3); }
+  .fb-note { background: rgba(107,174,196,0.15); color: var(--slate); }
+  .fb-route { background: rgba(140,107,74,0.12); color: var(--bark); }
+  .fb-safety { background: rgba(196,98,45,0.1); color: var(--ember); border: 1px solid rgba(196,98,45,0.3); }
+  .fixed-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
+  .fixed-sub { font-size: 11px; color: var(--mist); margin-top: 2px; }
+  .idea-field { width: 100%; border: 1.5px dashed var(--birch); border-radius: 8px; padding: 9px 12px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink); background: var(--snow); resize: vertical; min-height: 52px; line-height: 1.5; transition: border-color 0.2s; outline: none; margin-top: 6px; }
+  .idea-field:focus { border-color: var(--glacier); border-style: solid; }
+  .idea-field::placeholder { color: var(--birch); font-style: italic; }
+
+  /* ── BOOK AHEAD ── */
+  .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .book-card { background: var(--cloud); border-radius: 14px; padding: 24px; border: 1px solid var(--birch); }
+  .book-urgency { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .urgency-now { color: var(--ember); }
+  .urgency-soon { color: var(--bark); }
+  .urgency-done { color: var(--slate); }
+  .urgency-call { color: var(--glacier); }
+  .book-name { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--mountain); margin-bottom: 6px; }
+  .book-detail { font-size: 13px; color: var(--mist); line-height: 1.6; margin-bottom: 12px; }
+  .book-link { display: inline-block; font-family: 'Space Mono', monospace; font-size: 10px; padding: 6px 14px; border-radius: 100px; text-decoration: none; transition: opacity 0.2s; }
+  .book-link:hover { opacity: 0.8; }
+  .link-primary { background: var(--mountain); color: var(--glacier); }
+  .link-call { background: rgba(45,90,114,0.1); color: var(--slate); border: 1px solid rgba(45,90,114,0.3); }
+
+  /* ── SAM REFERENCE ── */
+  .sam-ref { background: var(--mountain); border-radius: 20px; padding: 40px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .sam-ref-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--snow); margin-bottom: 16px; }
+  .sam-ref-title em { font-style: italic; color: var(--glacier); }
+  .sam-ref-note { font-size: 14px; color: rgba(242,240,237,0.7); line-height: 1.7; margin-bottom: 12px; }
+  .sam-ref-sub { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--glacier); text-transform: uppercase; margin-bottom: 20px; }
+  .sched-grid { display: grid; gap: 0; }
+  .sched-row { display: grid; grid-template-columns: 80px 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(107,174,196,0.1); align-items: center; }
+  .sched-time { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--glacier); }
+  .sched-event { font-size: 13px; color: var(--snow); }
+  .sched-tag { display: inline-block; background: rgba(196,98,45,0.25); color: var(--ember); font-family: 'Space Mono', monospace; font-size: 9px; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+
+  /* ── SAFETY SECTION ── */
+  .safety-panel { background: var(--peak-dark); border-radius: 20px; padding: 40px 48px; }
+  .safety-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--snow); margin-bottom: 8px; }
+  .safety-title em { font-style: italic; color: var(--glacier); }
+  .safety-intro { font-size: 14px; color: rgba(242,240,237,0.65); line-height: 1.7; margin-bottom: 32px; }
+  .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .safety-col-title { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--glacier); text-transform: uppercase; margin-bottom: 16px; }
+  .rule-item { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+  .rule-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .rule-text { font-size: 13px; color: var(--snow); line-height: 1.6; }
+  .rule-sub { font-size: 12px; color: rgba(242,240,237,0.55); margin-top: 2px; }
+  .hospital-item { padding: 10px 0; border-bottom: 1px solid rgba(107,174,196,0.1); }
+  .hospital-item:last-child { border-bottom: none; }
+  .hospital-location { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--glacier); text-transform: uppercase; margin-bottom: 3px; }
+  .hospital-name { font-size: 13px; color: var(--snow); font-weight: 500; }
+  .hospital-detail { font-size: 11px; color: rgba(242,240,237,0.55); margin-top: 2px; }
+
+  /* ── TIPS ── */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .tip-card { background: var(--cloud); border: 1px solid var(--birch); border-radius: 14px; padding: 24px; }
+  .tip-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .tip-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--mountain); margin-bottom: 8px; }
+  .tip-text { font-size: 13px; color: var(--mist); line-height: 1.65; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--peak-dark); padding: 48px 24px; text-align: center; }
+  .footer-title { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--snow); margin-bottom: 8px; }
+  .footer-sub { font-size: 14px; color: var(--mist); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .day-header { grid-template-columns: auto 1fr; padding: 18px 20px; }
+    .day-badges { display: none; }
+    .day-num { font-size: 36px; }
+    .day-body { padding: 8px 20px 24px; }
+    .tl-row { grid-template-columns: 60px 18px 1fr; }
+    .sam-ref { grid-template-columns: 1fr; padding: 28px 24px; gap: 28px; }
+    .safety-grid { grid-template-columns: 1fr; }
+    .safety-panel { padding: 28px 24px; }
+    .flight-leg { padding: 12px 16px; border-right: none; border-bottom: 1px solid rgba(107,174,196,0.2); width: 100%; }
+    .flight-leg:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-rings">
+    <div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div>
+  </div>
+  <svg class="mountain-svg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path fill="#6BAEC4" d="M0,320 L0,220 L160,80 L260,150 L400,10 L500,120 L620,40 L700,100 L820,0 L940,90 L1080,30 L1200,140 L1320,60 L1440,180 L1440,320 Z"/>
+    <path fill="#F2F0ED" d="M400,10 L350,70 L450,70 Z M820,0 L770,65 L870,65 Z M1080,30 L1020,95 L1140,95 Z"/>
+  </svg>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Oregon · July 2026 · Caden's First West Coast Trip</p>
+    <h1 class="hero-title"><em>Oregon</em><br>with Mom<br>& Caden</h1>
+    <p class="hero-sub">mountains, gorges & Sam the puppy 🐾</p>
+    <div class="hero-meta">
+      <span class="hero-pill">Jul 16 – Jul 21</span>
+      <span class="hero-pill">5 nights · 6 days</span>
+      <span class="hero-pill">Mt. Hood · Skamania · Portland</span>
+    </div>
+    <a href="#itinerary" class="hero-scroll">scroll down<div class="scroll-line"></div></a>
+  </div>
+</section>
+
+<!-- FLIGHT BANNER -->
+<div class="flight-banner">
+  <div class="flight-leg">
+    <div>
+      <div class="leg-dir">Arriving</div>
+      <div class="leg-route"><span>PIT</span> → ORD → <span>PDX</span></div>
+      <div class="leg-detail">Thu Jul 16 · AA 4427 + AA 2284 · Arrives PDX 10:36am</div>
+    </div>
+  </div>
+  <div class="flight-leg">
+    <div>
+      <div class="leg-dir">Departing</div>
+      <div class="leg-route"><span>PDX</span> → ORD → <span>PIT</span></div>
+      <div class="leg-detail">Tue Jul 21 · AA 3303 + AA 4539 · Departs PDX 1:45pm</div>
+    </div>
+    <div class="leg-warning">🕛 Leave by noon</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#itinerary" class="nav-link">Itinerary</a>
+    <a href="#map" class="nav-link">Route Map</a>
+    <a href="#booking" class="nav-link">Book Ahead</a>
+    <a href="#sam" class="nav-link">Sam's Schedule</a>
+    <a href="#safety" class="nav-link">Safety & Info</a>
+    <a href="#tips" class="nav-link">Tips</a>
+  </div>
+</nav>
+
+<!-- MAP -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<section id="map" style="padding: 60px 0; background: var(--cloud);">
+  <div class="container">
+    <p class="section-label">The route</p>
+    <h2 class="section-title">Trip Map</h2>
+    <p class="section-intro" style="margin-bottom: 28px;">Portland → Mt. Hood → Timberline → Hood River → Skamania Lodge → home.</p>
+    <div id="trip-map" style="border-radius: 16px; overflow: hidden; border: 1px solid var(--birch); height: 520px; z-index: 0;"></div>
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;">
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#1F3040; color:#6BAEC4; padding:4px 12px; border-radius:100px;">🏠 Portland (Jul 16, 17, 20, 21)</span>
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#F2F0ED; color:#6B7B72; padding:4px 12px; border-radius:100px; border:1px solid #E8E2D8;">→ Trillium Lake</span>
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#8C6B4A; color:white; padding:4px 12px; border-radius:100px;">🏔 Timberline Lodge (Jul 18)</span>
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#2D5A72; color:white; padding:4px 12px; border-radius:100px;">🐾 Hood River · Christine's</span>
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#6BAEC4; color:#111C26; padding:4px 12px; border-radius:100px;">🌊 Skamania Lodge (Jul 19)</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const map = L.map('trip-map', { zoomControl: true }).setView([45.52, -122.10], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+
+  const route = [
+    [45.5769, -122.7272],
+    [45.5200, -122.5000],
+    [45.4500, -122.3000],
+    [45.3500, -121.9500],
+    [45.2707, -121.7390],
+    [45.3311, -121.7110],
+    [45.3700, -121.6500],
+    [45.5000, -121.5800],
+    [45.7054, -121.5217],
+    [45.7200, -121.5350],
+    [45.6920, -121.9100],
+    [45.6700, -122.2000],
+    [45.6400, -122.4500],
+    [45.5900, -122.6000],
+    [45.5769, -122.7272],
+  ];
+
+  L.polyline(route, { color: '#F2F0ED', weight: 6, opacity: 0.9 }).addTo(map);
+  L.polyline(route, { color: '#2D5A72', weight: 3, opacity: 1 }).addTo(map);
+
+  function makeIcon(emoji, bg, textColor) {
+    textColor = textColor || 'white';
+    return L.divIcon({
+      html: `<div style="background:${bg};color:${textColor};border:2.5px solid white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">${emoji}</div>`,
+      className: '', iconSize: [34,34], iconAnchor: [17,17], popupAnchor: [0,-20]
+    });
+  }
+
+  const stops = [
+    { latlng: [45.5769, -122.7272], emoji: '🏠', bg: '#1F3040', title: 'Your Home — Portland', sub: 'Jul 16, 17, 20 & 21' },
+    { latlng: [45.2707, -121.7390], emoji: '🚣', bg: '#2D5A72', title: 'Trillium Lake', sub: 'Paddleboarding · Sat Jul 18' },
+    { latlng: [45.3311, -121.7110], emoji: '🏔', bg: '#8C6B4A', title: 'Timberline Lodge', sub: 'Overnight · Sat Jul 18' },
+    { latlng: [45.7054, -121.5217], emoji: '🐾', bg: '#8C6B4A', title: "Hood River · Christine's", sub: 'Sam drop-off & pick-up' },
+    { latlng: [45.6920, -121.9100], emoji: '🌊', bg: '#6BAEC4', title: 'Skamania Lodge', sub: 'Stevenson, WA · Sun Jul 19', textColor: '#111C26' },
+  ];
+
+  stops.forEach(s => {
+    L.marker(s.latlng, { icon: makeIcon(s.emoji, s.bg, s.textColor) })
+      .addTo(map)
+      .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:160px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${s.title}</div><div style="font-size:11px;color:#6B7B72;">${s.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
+  });
+})();
+</script>
+
+<!-- ITINERARY -->
+<section id="itinerary">
+  <div class="container">
+    <p class="section-label">The plan</p>
+    <h2 class="section-title">Day by Day</h2>
+    <p class="section-intro">Sam's naps and meals are woven into each day so you can see your activity windows. At 14 weeks she has longer stretches than before — roughly 2–2.5 hrs awake at a time.</p>
+
+    <div class="days-stack">
+
+      <!-- ══ DAY 1: THU JUL 16 ══ -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">16</div>
+          <div class="day-info">
+            <div class="day-date">Thursday, July 16 — Arrival Day</div>
+            <div class="day-title">Mom & Caden land at 10:36am 🛬</div>
+          </div>
+          <div class="day-badges">
+            <span class="badge badge-lodging">🏠 Your Home</span>
+            <span class="badge badge-dog">🐾 Sam at home</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="timeline">
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Sam wakes · potty · meal 1 · awake ~2hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">8:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Sam naps ~1.5hrs · tidy up before airport run</span></div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">10:36am</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-confirmed">FLIGHT</span>
+                  <div class="fixed-text">AA 2284 lands at PDX · Mom & Caden arrive · ~25min to your place</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">10:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Up · potty · awake to meet the guests</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~11:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Arrival afternoon · ~2hrs open</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">NOTE</span>
+                  <div class="fixed-text">They've been up since ~5am Pittsburgh time for a 6:23am departure. A low-key first afternoon is the right call — lunch nearby, meet Sam, walk the neighborhood.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Lunch spot nearby? Meet Sam, neighborhood walk, settle in..."></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~12:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 2 · nap ~1.5hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~2:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Afternoon window · ~2.5hrs</div>
+                <textarea class="idea-field" placeholder="Short walk, Sam's first impression on Caden, easy exploring..."></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~4:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Sam naps ~1hr</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~5:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Welcome dinner 🍽</div>
+                <textarea class="idea-field" placeholder="Welcome dinner — where are we going?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 3 · potty · wind down · crate for night</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DAY 2: FRI JUL 17 ══ -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">17</div>
+          <div class="day-info">
+            <div class="day-date">Friday, July 17</div>
+            <div class="day-title">Portland Day 🌆</div>
+          </div>
+          <div class="day-badges">
+            <span class="badge badge-lodging">🏠 Your Home</span>
+            <span class="badge badge-dog">🐾 Sam comes!</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="timeline">
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Wake · potty · meal 1 · awake ~2hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">8:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Nap ~1.5hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">10:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Morning window · ~2.5hrs</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">IDEA</span>
+                  <div class="fixed-text">Forest Park — Macleay Trail or Lower Wildwood. Dog-friendly, huge old growth forest right in the city. Great intro hike for Caden. All 3 hike together per the plan.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Forest Park hike? Breakfast first? Explore a neighborhood?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~12:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 2 · nap ~1.5hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~2:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Afternoon window · ~2.5hrs · Portland proper</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">IDEA</span>
+                  <div class="fixed-text">Powell's Books (dogs welcome), food cart pods for a late lunch, Mississippi Ave or Alberta Arts District for a stroll. Good intro to Portland's character for a first-timer.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Powell's? Food carts? Mississippi Ave? Waterfront?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~4:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Sam naps · good time to pack for Mt. Hood tomorrow</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~5:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Dinner out 🍽</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">NOTE</span>
+                  <div class="fixed-text">Big drive to Mt. Hood tomorrow — aim for an early night. Pack the car tonight: paddleboard gear, life jackets, dog kit, overnight bags for Timberline.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Dinner plans..."></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 3 · potty · crate for night</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DAY 3: SAT JUL 18 ══ -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">18</div>
+          <div class="day-info">
+            <div class="day-date">Saturday, July 18</div>
+            <div class="day-title">Mt. Hood · Trillium Lake · Timberline 🏔</div>
+          </div>
+          <div class="day-badges">
+            <span class="badge badge-lodging">🏔 Timberline Lodge</span>
+            <span class="badge badge-confirmed">✓ BOOK NOW</span>
+            <span class="badge badge-dog">🐾 Sam comes!</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="timeline">
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Wake · potty · meal 1 · awake ~2hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">8:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Nap · load the car · head out (~1hr 20min to Trillium Lake)</span></div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~10:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Up · potty stop at Trillium Lake parking · awake ~2.5hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~10:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Trillium Lake · paddleboarding 🏄</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-book">RESERVE</span>
+                  <div>
+                    <div class="fixed-text">Trillium Lake — calm, no motorized boats, iconic Mt. Hood reflection. Caden & Ashley paddle; Mom & Sam on the shore trail.</div>
+                    <div class="fixed-sub">Life jackets on for all paddlers. Reserve boards in advance — they go fast on summer weekends.</div>
+                  </div>
+                </div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-safety">SAFETY</span>
+                  <div class="fixed-text">Life jackets required · Mom on shore so there's always an adult present at the water.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~12:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 2 · nap in car (~15min to Timberline)</span></div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">~1:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-confirmed">CHECK IN</span>
+                  <div>
+                    <div class="fixed-text">Timberline Lodge · Dog-friendly · Sat Jul 18 night</div>
+                    <div class="fixed-sub">Lunch at the Ram's Head Bar on-site. Historic WPA lodge at 6,000ft with glacier views.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~2:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Afternoon hike from the lodge · ~2.5hrs</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">IDEA</span>
+                  <div class="fixed-text">Timberline Trail into the alpine meadows — July is peak wildflower bloom. Even 1–2 miles out is stunning. Dogs on leash. All 3 hike together.</div>
+                </div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-safety">SAFETY</span>
+                  <div class="fixed-text">Hike as a group of 3 — Ashley, Mom & Caden together at all times on trail.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Timberline Trail? Explore the lodge? Huckleberry milkshakes in Government Camp?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~4:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Sam naps in room</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~5:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Evening at Timberline 🌄</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">NOTE</span>
+                  <div class="fixed-text">Cascade Dining Room for dinner on-site. Sun sets ~9pm with long golden alpenglow on Hood's glaciers — Caden won't forget it. Sam crates in room for dinner.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Dinner at the lodge? Sunset from the terrace?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 3 · potty · crate for night at Timberline</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DAY 4: SUN JUL 19 ══ -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">19</div>
+          <div class="day-info">
+            <div class="day-date">Sunday, July 19</div>
+            <div class="day-title">Hood River → Skamania Lodge 🌊</div>
+          </div>
+          <div class="day-badges">
+            <span class="badge badge-lodging">🌊 Skamania Lodge</span>
+            <span class="badge badge-confirmed">✓ CONFIRMED</span>
+            <span class="badge badge-nodog">🐾 Sam at Christine's</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="timeline">
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Wake · potty at lodge · meal 1 · awake ~2hrs</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">7:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Morning hike from Timberline · ~2hrs</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">NOTE</span>
+                  <div class="fixed-text">Last morning on the mountain — early hike before checkout. The meadows at sunrise with no crowds are something special. All 3 together on trail.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Sunrise hike? Lodge breakfast? Explore the meadows one more time?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">8:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-nap"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">💤 Sam naps · check out of Timberline · pack up</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~9:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Drive Timberline → Hood River via Hwy 35 · ~1hr scenic</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-route">ROUTE</span>
+                  <div class="fixed-text">Hwy 35 north along the eastern flank of Mt. Hood — one of the most beautiful drives in Oregon. Sam naps in the car.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">~10:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-confirmed">DROP-OFF</span>
+                  <div>
+                    <div class="fixed-text">Hood River · Drop Sam at Christine's house 🐾</div>
+                    <div class="fixed-sub">Sam is set until Monday pickup. Hood River is a great lunch town — windsurfing capital of the Northwest, great food, Mt. Hood views over the Columbia.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~11:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Hood River lunch + explore</div>
+                <textarea class="idea-field" placeholder="Lunch in Hood River? Waterfront? Fruit loop stand? Stroll before crossing the bridge..."></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">~1:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-route">BRIDGE</span>
+                  <div>
+                    <div class="fixed-text">Cross the Columbia River into Washington on the Hood River Bridge · ~20min to Skamania Lodge</div>
+                    <div class="fixed-sub">Caden just crossed into his second state on this trip.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">~1:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-confirmed">CHECK IN</span>
+                  <div>
+                    <div class="fixed-text">Skamania Lodge · Stevenson, WA · Jul 19–20</div>
+                    <div class="fixed-sub">On the Washington side of the Columbia River Gorge. Zip line, aerial park, hiking, river views. Confirmed.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~2:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Afternoon at Skamania</div>
+                <textarea class="idea-field" placeholder="Explore the lodge grounds? Pool? Evening gorge walk? Caden picks the activity..."></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~6:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Dinner at Skamania 🍽</div>
+                <textarea class="idea-field" placeholder="Dining Room at Skamania? Happy hour on the gorge-view terrace?"></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DAY 5: MON JUL 20 ══ -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">20</div>
+          <div class="day-info">
+            <div class="day-date">Monday, July 20</div>
+            <div class="day-title">Gorge Adventures · Hood River · Home 🌲</div>
+          </div>
+          <div class="day-badges">
+            <span class="badge badge-lodging">🏠 Portland (tonight)</span>
+            <span class="badge badge-nodog">🐾 Sam at Christine's → home</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="timeline">
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~8:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Morning at Skamania · big activity window</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-book">CALL TO CONFIRM</span>
+                  <div>
+                    <div class="fixed-text">Zip line tour OR aerial adventure park at Skamania — TBD based on your call with the lodge. Either works for this morning window.</div>
+                    <div class="fixed-sub">Call Skamania to confirm which activity and nail down the time slot. Both are excellent for a 14-year-old.</div>
+                  </div>
+                </div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-safety">SAFETY</span>
+                  <div class="fixed-text">Zip line and aerial park have their own safety harness systems — all 3 can participate together.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Zip line? Aerial park? Gorge hike? Multnomah Falls (30min away)?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~11:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Check out · drive back through Hood River</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-confirmed">PICKUP</span>
+                  <div>
+                    <div class="fixed-text">Stop at Christine's in Hood River to pick up Sam 🐾</div>
+                    <div class="fixed-sub">~20min from Skamania back across the bridge. Grab lunch in Hood River before heading home.</div>
+                  </div>
+                </div>
+                <textarea class="idea-field" placeholder="Lunch in Hood River before the drive back?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~2:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Drive home to Portland · ~1hr 15min</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-route">ROUTE</span>
+                  <div class="fixed-text">I-84 west through the Gorge — consider a quick stop at Multnomah Falls viewpoint if energy allows. Sam naps in the car.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~3:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Sam home · potty · reunited with the cats · settle in</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~4:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Easy evening at home 🏠</div>
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-note">NOTE</span>
+                  <div class="fixed-text">Last full night together — a relaxed dinner at home or somewhere low-key. Flight tomorrow at 1:45pm means no rush in the morning.</div>
+                </div>
+                <textarea class="idea-field" placeholder="Dinner at home? Order in? One last restaurant pick?"></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Meal 3 · potty · crate for night</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DAY 6: TUE JUL 21 ══ -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">21</div>
+          <div class="day-info">
+            <div class="day-date">Tuesday, July 21 — Departure</div>
+            <div class="day-title">Farewell & Safe Travels ✈️</div>
+          </div>
+          <div class="day-badges">
+            <span class="badge badge-alert">🕛 Leave by noon</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="timeline">
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">6:30am</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Sam wakes · morning routine · easy final morning</span></div>
+            </div>
+
+            <div class="tl-row tl-plan">
+              <div class="tl-time">~8:00am</div>
+              <div class="tl-spine"><div class="tl-dot dot-plan"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-window-label">Final morning · easy pace</div>
+                <textarea class="idea-field" placeholder="Last breakfast together? Final walk with Sam? Packing up..."></textarea>
+              </div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">~12:00pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-book">LEAVE NOW</span>
+                  <div>
+                    <div class="fixed-text">Head to PDX · 25–30min drive · arrive by 12:30pm for 1:45pm departure</div>
+                    <div class="fixed-sub">TSA PreCheck line moves fast. Still, give yourself a comfortable buffer.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-fixed">
+              <div class="tl-time">1:45pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-fixed"></div><div class="tl-line"></div></div>
+              <div class="tl-content">
+                <div class="tl-fixed-item">
+                  <span class="fixed-badge fb-confirmed">FLIGHT</span>
+                  <div class="fixed-text">AA 3303 PDX → ORD · then AA 4539 ORD → PIT · Arrives Pittsburgh 11:52pm</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-row tl-sam">
+              <div class="tl-time">~1:45pm</div>
+              <div class="tl-spine"><div class="tl-dot dot-sam"></div><div class="tl-line"></div></div>
+              <div class="tl-content"><span class="sam-label">🐾 Quiet afternoon with just you two 🌅</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end days-stack -->
+  </div>
+</section>
+
+<!-- BOOK AHEAD -->
+<section id="booking" class="section-alt">
+  <div class="container">
+    <p class="section-label">Don't forget</p>
+    <h2 class="section-title">Book in Advance</h2>
+    <p class="section-intro">A few things that need to be locked in before the trip.</p>
+    <div class="book-grid">
+
+      <div class="book-card">
+        <div class="book-urgency urgency-now">⚡ Book now</div>
+        <div class="book-name">Timberline Lodge</div>
+        <div class="book-detail">Night of Sat Jul 18. Dog-friendly room — confirm pet policy when booking. July weekends sell out. Call or book online.</div>
+        <a href="tel:+15032722600" class="book-link link-call">503-272-2600</a>
+      </div>
+
+      <div class="book-card">
+        <div class="book-urgency urgency-done">✓ Confirmed</div>
+        <div class="book-name">Skamania Lodge</div>
+        <div class="book-detail">Jul 19–20 · Stevenson, WA · On the Columbia River in the Gorge. Zip line, aerial park, gorge views.</div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-urgency urgency-now">⚡ Reserve ahead</div>
+        <div class="book-name">Trillium Lake Paddleboards</div>
+        <div class="book-detail">Saturday Jul 18 morning. Boards go fast on summer weekends. Life jackets required — confirm rental includes them or bring your own.</div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-urgency urgency-call">📞 Call to confirm</div>
+        <div class="book-name">Skamania Zip Line / Aerial Park</div>
+        <div class="book-detail">Monday Jul 20 morning. Call Skamania to decide between the zip line tour and the aerial adventure park and reserve the time slot.</div>
+        <a href="tel:+15094272528" class="book-link link-call">509-427-2528</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SAM REFERENCE -->
+<section id="sam">
+  <div class="container">
+    <p class="section-label">The most important crew member</p>
+    <h2 class="section-title">Sam's Daily Rhythm</h2>
+    <p class="section-intro">At 14 weeks Sam needs about 16 hours of sleep per day — but her awake windows are longer now. Car rides still count as naps. Must go out every 1.5–2 hours when awake.</p>
+    <div class="sam-ref">
+      <div>
+        <div class="sam-ref-sub">14-Week-Old Puppy · Every Day</div>
+        <h3 class="sam-ref-title">Sam's <em>Daily Blueprint</em></h3>
+        <p class="sam-ref-note">At 14 weeks she's grown up from the Jordan & Katie visit — awake windows are now 2–2.5 hours instead of 1–1.5 hours. Three naps per day instead of four or five. More flexibility, same core needs.</p>
+        <p class="sam-ref-note">Car rides are still great nap opportunities. Use the drives to Hood River and back to Portland strategically — she'll sleep through them and arrive rested.</p>
+        <p class="sam-ref-note">Sam drops to Christine's in Hood River on Sunday evening and gets picked up Monday before the drive home.</p>
+      </div>
+      <div class="sched-grid">
+        <div class="sched-row"><div class="sched-time">6:30 am</div><div class="sched-event">🌅 Wake · potty · meal 1</div></div>
+        <div class="sched-row"><div class="sched-time">6:30–8:30</div><div class="sched-event">Awake window (~2 hrs)</div></div>
+        <div class="sched-row"><div class="sched-time">8:30 am</div><div class="sched-event">💤 Nap (~1.5 hrs) <span class="sched-tag">crate</span></div></div>
+        <div class="sched-row"><div class="sched-time">10:00 am</div><div class="sched-event">Potty · awake (~2.5 hrs)</div></div>
+        <div class="sched-row"><div class="sched-time">12:30 pm</div><div class="sched-event">🍽 Meal 2 · nap (~1.5 hrs)</div></div>
+        <div class="sched-row"><div class="sched-time">2:00 pm</div><div class="sched-event">Potty · awake + activity (~2.5 hrs)</div></div>
+        <div class="sched-row"><div class="sched-time">4:30 pm</div><div class="sched-event">💤 Nap (~1 hr)</div></div>
+        <div class="sched-row"><div class="sched-time">5:30 pm</div><div class="sched-event">Potty · awake window</div></div>
+        <div class="sched-row"><div class="sched-time">6:30 pm</div><div class="sched-event">🍽 Meal 3 · last big potty</div></div>
+        <div class="sched-row"><div class="sched-time">8:00 pm</div><div class="sched-event">Wind down · crate for night</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY & EMERGENCY INFO -->
+<section id="safety" class="section-alt">
+  <div class="container">
+    <p class="section-label">For peace of mind</p>
+    <h2 class="section-title">Safety & Emergency Info</h2>
+    <p class="section-intro" style="margin-bottom: 40px;">Ground rules for the trip and the nearest top-rated medical facilities at every stop — so everyone back home knows the plan.</p>
+    <div class="safety-panel">
+      <div class="safety-grid">
+        <div>
+          <div class="safety-col-title">Ground Rules</div>
+
+          <div class="rule-item">
+            <div class="rule-icon">🥾</div>
+            <div>
+              <div class="rule-text">All hikes are a group of three — Ashley, Mom, and Caden together at all times on trail.</div>
+              <div class="rule-sub">No two-person hiking so there's always a capable adult present in case of emergency.</div>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-icon">🏄</div>
+            <div>
+              <div class="rule-text">Life jackets on for all paddling — no exceptions at Trillium Lake.</div>
+              <div class="rule-sub">Mom stays on shore with a clear line of sight to the water at all times.</div>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-icon">🪂</div>
+            <div>
+              <div class="rule-text">Zip line and aerial park at Skamania use professional harness systems with trained guides on-site.</div>
+              <div class="rule-sub">All 3 can participate together. Safety briefing provided at the activity.</div>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-icon">📱</div>
+            <div>
+              <div class="rule-text">Cell coverage is limited above Timberline Lodge. Download offline maps before leaving Portland.</div>
+              <div class="rule-sub">The lodge has WiFi and a landline. In an emergency, lodge staff are trained first responders.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="safety-col-title">Nearest Top Hospitals</div>
+
+          <div class="hospital-item">
+            <div class="hospital-location">Portland (home base)</div>
+            <div class="hospital-name">OHSU — Oregon Health & Science University</div>
+            <div class="hospital-detail">Level 1 Trauma Center · Top-ranked hospital in Oregon · 3181 SW Sam Jackson Park Rd</div>
+          </div>
+
+          <div class="hospital-item">
+            <div class="hospital-location">Mt. Hood · Timberline Lodge</div>
+            <div class="hospital-name">Providence Hood River Memorial Hospital</div>
+            <div class="hospital-detail">~45min from Timberline via Hwy 35 · 811 13th St, Hood River, OR · Serious cases transfer to OHSU or Legacy Emanuel in Portland</div>
+          </div>
+
+          <div class="hospital-item">
+            <div class="hospital-location">Hood River (Christine's)</div>
+            <div class="hospital-name">Providence Hood River Memorial Hospital</div>
+            <div class="hospital-detail">Right in town · 811 13th St, Hood River, OR · 541-386-3911</div>
+          </div>
+
+          <div class="hospital-item">
+            <div class="hospital-location">Skamania Lodge · Stevenson, WA</div>
+            <div class="hospital-name">Providence Hood River Memorial Hospital</div>
+            <div class="hospital-detail">~20min across the bridge · Best option for this area · For major trauma, Legacy Emanuel in Portland (~1hr) is Level 1</div>
+          </div>
+
+          <div class="hospital-item">
+            <div class="hospital-location">Columbia River Gorge · Multnomah Falls area</div>
+            <div class="hospital-name">Legacy Emanuel Medical Center</div>
+            <div class="hospital-detail">Level 1 Trauma Center · Portland · ~45min west on I-84 · 2801 N Gantenbein Ave</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips">
+  <div class="container">
+    <p class="section-label">Planning notes</p>
+    <h2 class="section-title">Tips & Reminders</h2>
+    <div class="tips-grid">
+
+      <div class="tip-card">
+        <span class="tip-icon">🏔</span>
+        <h4 class="tip-title">July at Mt. Hood</h4>
+        <p class="tip-text">High 70s–low 80s in the valley, 50–65°F at Timberline (6,000ft). Pack layers for mountain evenings — it gets cold fast after sunset. Sun protection and plenty of water for everyone on trails.</p>
+      </div>
+
+      <div class="tip-card">
+        <span class="tip-icon">🌊</span>
+        <h4 class="tip-title">The Gorge in Summer</h4>
+        <p class="tip-text">The Columbia River Gorge gets strong afternoon winds — that's what makes it the windsurfing capital of the Pacific Northwest. Comfortable temperatures, dramatic scenery. Multnomah Falls is best visited early to beat crowds.</p>
+      </div>
+
+      <div class="tip-card">
+        <span class="tip-icon">🐾</span>
+        <h4 class="tip-title">Sam on the Road</h4>
+        <p class="tip-text">At 14 weeks she can handle longer stretches than before, but still needs out every 1.5–2 hours when awake. Plan potty stops at trailheads and rest stops. Car rides count as nap time — use them strategically.</p>
+      </div>
+
+      <div class="tip-card">
+        <span class="tip-icon">🚗</span>
+        <h4 class="tip-title">The Hood River Loop</h4>
+        <p class="tip-text">Timberline → Hood River via Hwy 35 is one of the most scenic drives in Oregon — the eastern flank of Mt. Hood with orchard valley views. Don't rush it. Then Skamania is just across the Columbia Bridge, about 20 minutes from Hood River.</p>
+      </div>
+
+      <div class="tip-card">
+        <span class="tip-icon">✈️</span>
+        <h4 class="tip-title">Tuesday Departure</h4>
+        <p class="tip-text">Flight departs PDX at 1:45pm. Leave home by noon — PDX is a 25–30 minute drive and security is quick. The easy morning pace on Tuesday means no rushing. A final breakfast at home is a good send-off.</p>
+      </div>
+
+      <div class="tip-card">
+        <span class="tip-icon">🌲</span>
+        <h4 class="tip-title">First West Coast Trip</h4>
+        <p class="tip-text">Caden gets Mt. Hood glaciers, the Columbia River Gorge, alpine meadows, a historic WPA lodge, a waterfall-filled gorge, and his first time in Washington state. Not a bad introduction to the Pacific Northwest.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-title">Have the best trip 🏔</div>
+  <p class="footer-sub" style="margin-top:8px;">Portland · Mt. Hood · Hood River · Skamania · July 16–21, 2026</p>
+  <p class="footer-sub" style="margin-top:4px;font-size:12px;">Made with love for Mom, Caden & Sam 🐾</p>
+</footer>
+
+</body>
+</html>
