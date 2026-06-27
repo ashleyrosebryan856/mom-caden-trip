@@ -91,6 +91,7 @@ Built as a single `index.html` file hosted on GitHub Pages. No frameworks or bui
 - **Map** — [Leaflet.js](https://leafletjs.com) with OpenStreetMap tiles. Route polyline, overnight stop markers, hike trail lines (hardcoded coordinates with OSM upgrade attempted on load), and paddle spot markers.
 - **Images** — stored in the repo root alongside `index.html`
 - **No backend** — all content is static. Updates are made by editing `index.html` and pushing to `main`.
+- **Responsive** — desktop nav centers tabs across the top; mobile nav collapses to a hamburger menu with a full-width dropdown.
 
 ### Files
 
@@ -98,7 +99,9 @@ Built as a single `index.html` file hosted on GitHub Pages. No frameworks or bui
 |------|-------------|
 | `index.html` | The entire site |
 | `mt hood.jpg` | Hero banner image |
-| `Timberline.png` | Timberline Lodge highlight card |
+| `Timberline2.png` | Timberline Lodge highlight card |
+| `Timberline.jpeg` | Alternate Timberline image (unused) |
+| `Timberline.png` | Original Timberline image (unused) |
 | `zigzag canyon.png` | Zigzag Canyon highlight card |
 | `Skamania Glamping.png` | Skamania glamping highlight card |
 | `zipline.png` | Zip line highlight card |
