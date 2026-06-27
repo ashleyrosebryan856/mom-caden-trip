@@ -359,13 +359,27 @@
       .bindPopup(popupHtml, { closeButton: false });
   }
 
-  // Draw approximate lines immediately so something is always visible
+  // Timberline Trail: curves north from lodge following mountain contour toward Paradise Park
+  // then descends west to Zigzag Canyon — traced from OSM tile geography
   const timberlineFallback = [
-    [45.3311, -121.7110],[45.3340, -121.7200],[45.3368, -121.7295],
-    [45.3390, -121.7385],[45.3408, -121.7475],[45.3425, -121.7562],
-    [45.3441, -121.7650],[45.3448, -121.7725],
+    [45.3311, -121.7110], // Timberline Lodge
+    [45.3338, -121.7155],
+    [45.3372, -121.7205],
+    [45.3412, -121.7265],
+    [45.3452, -121.7330],
+    [45.3488, -121.7405],
+    [45.3518, -121.7490],
+    [45.3535, -121.7575],
+    [45.3540, -121.7660],
+    [45.3528, -121.7740],
+    [45.3505, -121.7800],
+    [45.3475, -121.7850], // Zigzag Canyon overlook
   ];
-  let timberlineLayer = drawTrail(timberlineFallback, popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · ~2.4mi from the lodge · canyon overlook'));
+  const timberlinePopup = popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · ~2.4mi from the lodge · canyon overlook · click to dismiss');
+
+  // Draw fallback immediately; track both layers so we can swap them out
+  let tbOutline = L.polyline(timberlineFallback, { color: '#FFFFFF', weight: 8, opacity: 0.6, interactive: false }).addTo(map);
+  let tbLine    = L.polyline(timberlineFallback, { color: '#0077CC', weight: 5, opacity: 1 }).addTo(map).bindPopup(timberlinePopup, { closeButton: false });
 
   drawTrail([
     [45.5762,-122.1158],[45.5764,-122.1148],[45.5767,-122.1138],
@@ -379,29 +393,25 @@
     [45.5530,-122.7548],[45.5510,-122.7558],
   ], popup('Wildwood Trail · Germantown Rd', '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly'));
 
-  // Try to replace Timberline Trail with real OSM geometry
+  // Upgrade Timberline Trail to real OSM geometry if API is reachable
   (async () => {
     const endpoints = [
       'https://overpass-api.de/api/interpreter',
       'https://overpass.kumi.systems/api/interpreter',
+      'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
     ];
-    const query = `[out:json];way["name"="Timberline Trail"](45.320,-121.800,45.370,-121.700);out geom;`;
+    // Broad bbox to capture the full western segment of the loop near lodge
+    const query = `[out:json];(way["name"="Timberline Trail"](45.300,-121.830,45.400,-121.680);relation["name"="Timberline Trail"](45.300,-121.830,45.400,-121.680););out geom;`;
     for (const endpoint of endpoints) {
       try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          body: 'data=' + encodeURIComponent(query)
-        });
+        const res = await fetch(endpoint, { method: 'POST', body: 'data=' + encodeURIComponent(query) });
         if (!res.ok) continue;
         const data = await res.json();
-        const ways = data.elements.filter(el => el.geometry && el.geometry.length > 1);
+        const ways = (data.elements || []).filter(el => el.geometry && el.geometry.length > 1);
         if (ways.length === 0) continue;
-        // Remove fallback lines and draw accurate ones
-        map.removeLayer(timberlineLayer);
-        ways.forEach(el => {
-          const latlngs = el.geometry.map(g => [g.lat, g.lon]);
-          drawTrail(latlngs, popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · ~2.4mi from the lodge · canyon overlook'));
-        });
+        map.removeLayer(tbOutline);
+        map.removeLayer(tbLine);
+        ways.forEach(el => drawTrail(el.geometry.map(g => [g.lat, g.lon]), timberlinePopup));
         break;
       } catch(e) { continue; }
     }
