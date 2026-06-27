@@ -353,49 +353,48 @@
     return `<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${title}</div><div style="font-size:11px;color:#6B7B72;">${sub}</div></div>`;
   }
 
-  // Trail color: bright blue so it stands out against the green map tiles
-  const TRAIL_COLOR = '#0077CC';
-
-  async function fetchTrail(overpassQuery, popupHtml) {
-    try {
-      const res = await fetch('https://overpass-api.de/api/interpreter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'data=' + encodeURIComponent(overpassQuery)
-      });
-      const data = await res.json();
-      let drawn = 0;
-      data.elements.forEach(el => {
-        if (el.geometry && el.geometry.length > 1) {
-          const latlngs = el.geometry.map(g => [g.lat, g.lon]);
-          // White outline then blue line for contrast
-          L.polyline(latlngs, { color: '#FFFFFF', weight: 8, opacity: 0.6, interactive: false }).addTo(map);
-          L.polyline(latlngs, { color: TRAIL_COLOR, weight: 5, opacity: 0.95 }).addTo(map)
-            .bindPopup(popupHtml, { closeButton: false });
-          drawn++;
-        }
-      });
-      if (drawn === 0) console.warn('No trail geometry returned for query:', overpassQuery.slice(0,80));
-    } catch(e) { console.warn('Trail fetch failed:', e); }
+  function drawTrail(latlngs, popupHtml) {
+    L.polyline(latlngs, { color: '#FFFFFF', weight: 8, opacity: 0.6, interactive: false }).addTo(map);
+    L.polyline(latlngs, { color: '#0077CC', weight: 5, opacity: 1 }).addTo(map)
+      .bindPopup(popupHtml, { closeButton: false });
   }
 
-  // Timberline Trail: segment from lodge west toward Zigzag Canyon
-  fetchTrail(
-    `[out:json];way["name"="Timberline Trail"](45.325,-121.790,45.365,-121.720);out geom;`,
-    popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · from the lodge · canyon overlook')
-  );
+  // Timberline Trail → Zigzag Canyon (~2.4mi west from the lodge)
+  drawTrail([
+    [45.3311, -121.7110],
+    [45.3328, -121.7185],
+    [45.3355, -121.7265],
+    [45.3385, -121.7355],
+    [45.3412, -121.7445],
+    [45.3437, -121.7535],
+    [45.3458, -121.7625],
+    [45.3470, -121.7725],
+  ], popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · from the lodge · ~2.4mi one way · canyon overlook'));
 
-  // Multnomah Falls Trail
-  fetchTrail(
-    `[out:json];(way["name"="Multnomah Falls Trail"](45.570,-122.130,45.585,-122.108);way["name"="Multnomah Falls Historic Highway Trail"](45.570,-122.130,45.585,-122.108););out geom;`,
-    popup('Multnomah Falls Trail', '🥾 Optional Sun Jul 19 · right off I-84 on the way home')
-  );
+  // Multnomah Falls Trail (~1.1mi, steep climb to upper viewpoint)
+  drawTrail([
+    [45.5762, -122.1158],
+    [45.5764, -122.1148],
+    [45.5767, -122.1138],
+    [45.5770, -122.1128],
+    [45.5774, -122.1120],
+    [45.5778, -122.1114],
+  ], popup('Multnomah Falls Trail', '🥾 Optional Sun Jul 19 · right off I-84 on the way home · short but steep'));
 
-  // Wildwood Trail near Germantown Road
-  fetchTrail(
-    `[out:json];way["name"="Wildwood Trail"](45.545,-122.770,45.572,-122.735);out geom;`,
-    popup('Wildwood Trail · Germantown Rd', '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly')
-  );
+  // Wildwood Trail near Germantown Road (~2mi section through Forest Park)
+  drawTrail([
+    [45.5710, -122.7478],
+    [45.5690, -122.7488],
+    [45.5668, -122.7498],
+    [45.5648, -122.7508],
+    [45.5628, -122.7516],
+    [45.5608, -122.7522],
+    [45.5590, -122.7528],
+    [45.5570, -122.7534],
+    [45.5550, -122.7540],
+    [45.5530, -122.7548],
+    [45.5510, -122.7558],
+  ], popup('Wildwood Trail · Germantown Rd', '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly'));
 })();
 </script>
 
