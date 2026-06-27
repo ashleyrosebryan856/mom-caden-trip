@@ -254,13 +254,15 @@
       <span style="font-family:'Space Mono',monospace; font-size:10px; background:#2D5A72; color:white; padding:4px 12px; border-radius:100px;">🐾 Hood River · Christine's</span>
       <span style="font-family:'Space Mono',monospace; font-size:10px; background:#6BAEC4; color:#111C26; padding:4px 12px; border-radius:100px;">⛺ Skamania Glamping (Sat–Sun)</span>
       <span style="font-family:'Space Mono',monospace; font-size:10px; background:#F2F0ED; color:#6B7B72; padding:4px 12px; border-radius:100px; border:1px solid #E8E2D8;">→ White Salmon, WA</span>
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#2D5A47; color:white; padding:4px 12px; border-radius:6px;">🥾 Hikes</span>
+      <span style="font-family:'Space Mono',monospace; font-size:10px; background:#2D5A72; color:white; padding:4px 12px; border-radius:6px;">🚣 Paddle spots</span>
     </div>
   </div>
 </section>
 
 <script>
 (function() {
-  const map = L.map('trip-map', { zoomControl: true }).setView([45.55, -122.10], 8);
+  const map = L.map('trip-map', { zoomControl: true }).setView([45.50, -122.22], 9);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 18
@@ -268,28 +270,29 @@
 
   // Route: Portland → Timberline → Hood River → Skamania → White Salmon → Hood River → Portland
   const route = [
-    [45.5769, -122.7272], // Portland
+    [45.5769, -122.7272],
     [45.5200, -122.5000],
     [45.4500, -122.3000],
     [45.3500, -121.9500],
-    [45.2707, -121.7390], // Trillium Lake area
-    [45.3311, -121.7110], // Timberline
+    [45.2707, -121.7390],
+    [45.3311, -121.7110],
     [45.3700, -121.6500],
     [45.5000, -121.5800],
-    [45.7054, -121.5217], // Hood River
-    [45.7200, -121.5350], // Bridge
-    [45.6920, -121.9100], // Skamania
-    [45.7300, -121.4870], // White Salmon (return loop)
-    [45.7054, -121.5217], // Hood River pickup
+    [45.7054, -121.5217],
+    [45.7200, -121.5350],
+    [45.6920, -121.9100],
+    [45.7300, -121.4870],
+    [45.7054, -121.5217],
     [45.6800, -121.8000],
     [45.6200, -122.1000],
     [45.5900, -122.4000],
-    [45.5769, -122.7272], // Portland
+    [45.5769, -122.7272],
   ];
 
   L.polyline(route, { color: '#F2F0ED', weight: 6, opacity: 0.9 }).addTo(map);
   L.polyline(route, { color: '#2D5A72', weight: 3, opacity: 1 }).addTo(map);
 
+  // Large icons for overnight stops
   function makeIcon(emoji, bg, textColor) {
     textColor = textColor || 'white';
     return L.divIcon({
@@ -298,6 +301,16 @@
     });
   }
 
+  // Smaller icons for activities
+  function makeActivityIcon(emoji, bg, textColor) {
+    textColor = textColor || 'white';
+    return L.divIcon({
+      html: `<div style="background:${bg};color:${textColor};border:2px solid white;border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,0.25);opacity:0.92;">${emoji}</div>`,
+      className: '', iconSize: [28,28], iconAnchor: [14,14], popupAnchor: [0,-16]
+    });
+  }
+
+  // Overnight stops
   const stops = [
     { latlng: [45.5769, -122.7272], emoji: '🏠', bg: '#1F3040', title: 'Your Home — Portland', sub: 'Thu, Mon & Tue' },
     { latlng: [45.3311, -121.7110], emoji: '🏔', bg: '#8C6B4A', title: 'Timberline Lodge', sub: 'Overnight · Fri Jul 17' },
@@ -310,6 +323,32 @@
     L.marker(s.latlng, { icon: makeIcon(s.emoji, s.bg, s.textColor) })
       .addTo(map)
       .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:160px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${s.title}</div><div style="font-size:11px;color:#6B7B72;">${s.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
+  });
+
+  // Hikes
+  const hikes = [
+    { latlng: [45.347, -121.770], title: 'Timberline Trail → Zigzag Canyon', sub: '🥾 Fri Jul 17 · from the lodge · approx 4.5mi out & back · canyon overlook' },
+    { latlng: [45.5762, -122.1158], title: 'Multnomah Falls', sub: '🥾 Optional stop Sun Jul 19 on the way home · right off I-84' },
+    { latlng: [45.5578, -122.7530], title: 'Wildwood Trail · Germantown Rd', sub: '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly' },
+  ];
+
+  hikes.forEach(h => {
+    L.marker(h.latlng, { icon: makeActivityIcon('🥾', '#2D5A47') })
+      .addTo(map)
+      .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${h.title}</div><div style="font-size:11px;color:#6B7B72;">${h.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
+  });
+
+  // Paddle spots
+  const paddles = [
+    { latlng: [45.2707, -121.7390], title: 'Trillium Lake', sub: '🚣 Fri Jul 17 · calm, no motors · iconic Mt. Hood reflection · mom & Sam on shore' },
+    { latlng: [45.4145, -122.7600], title: 'Cook Park · Tigard', sub: '🚣 Mon Jul 20 option · Tualatin River · easy flatwater · dog friendly park nearby' },
+    { latlng: [45.4133, -122.6720], title: 'Lake Oswego', sub: '🚣 Mon Jul 20 option · calm lake · easy paddle · close to home' },
+  ];
+
+  paddles.forEach(p => {
+    L.marker(p.latlng, { icon: makeActivityIcon('🚣', '#2D5A72') })
+      .addTo(map)
+      .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${p.title}</div><div style="font-size:11px;color:#6B7B72;">${p.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
   });
 })();
 </script>
