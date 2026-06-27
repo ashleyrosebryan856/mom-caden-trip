@@ -62,6 +62,17 @@
   .nav-link { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 16px 18px; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
   .nav-link:hover { color: var(--mountain); border-color: var(--slate); }
 
+  /* ── HAMBURGER (mobile only) ── */
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 16px 0; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--mountain); margin: 5px 0; border-radius: 2px; transition: all 0.25s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--cloud); border-bottom: 1px solid var(--birch); z-index: 99; }
+  .nav-dropdown a { display: block; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 14px 24px; border-top: 1px solid var(--birch); }
+  .nav-dropdown a:hover { color: var(--mountain); background: var(--snow); }
+  .nav-dropdown.open { display: block; }
+
   /* ── LAYOUT ── */
   .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
   section { padding: 80px 0; }
@@ -182,6 +193,9 @@
     .flight-leg { padding: 12px 16px; border-right: none; border-bottom: 1px solid rgba(107,174,196,0.2); width: 100%; }
     .flight-leg:last-child { border-bottom: none; }
     .highlights-grid { grid-template-columns: 1fr !important; }
+    .nav { padding: 0 20px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-inner { display: none; }
+    .hamburger { display: block; }
   }
 </style>
 </head>
@@ -235,7 +249,32 @@
     <a href="#safety" class="nav-link">Safety & Info</a>
     <a href="#tips" class="nav-link">Tips</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-dropdown" id="nav-dropdown">
+    <a href="#itinerary" class="nav-dropdown-link">Itinerary</a>
+    <a href="#map" class="nav-dropdown-link">Route Map</a>
+    <a href="#highlights" class="nav-dropdown-link">Highlights</a>
+    <a href="#packing" class="nav-dropdown-link">Packing</a>
+    <a href="#safety" class="nav-dropdown-link">Safety & Info</a>
+    <a href="#tips" class="nav-dropdown-link">Tips</a>
+  </div>
 </nav>
+<script>
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('nav-dropdown');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-dropdown-link').forEach(link => {
+    link.addEventListener('click', () => {
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    });
+  });
+</script>
 
 <!-- MAP -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
