@@ -325,31 +325,73 @@
       .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:160px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${s.title}</div><div style="font-size:11px;color:#6B7B72;">${s.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
   });
 
-  // Hikes
-  const hikes = [
-    { latlng: [45.347, -121.770], title: 'Timberline Trail → Zigzag Canyon', sub: '🥾 Fri Jul 17 · from the lodge · approx 4.5mi out & back · canyon overlook' },
-    { latlng: [45.5762, -122.1158], title: 'Multnomah Falls', sub: '🥾 Optional stop Sun Jul 19 on the way home · right off I-84' },
-    { latlng: [45.5578, -122.7530], title: 'Wildwood Trail · Germantown Rd', sub: '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly' },
-  ];
-
-  hikes.forEach(h => {
-    L.marker(h.latlng, { icon: makeActivityIcon('🥾', '#2D5A47') })
-      .addTo(map)
-      .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${h.title}</div><div style="font-size:11px;color:#6B7B72;">${h.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
-  });
-
-  // Paddle spots
+  // Paddle spot markers (no trail line needed)
   const paddles = [
     { latlng: [45.2707, -121.7390], title: 'Trillium Lake', sub: '🚣 Fri Jul 17 · calm, no motors · iconic Mt. Hood reflection · mom & Sam on shore' },
     { latlng: [45.4145, -122.7600], title: 'Cook Park · Tigard', sub: '🚣 Mon Jul 20 option · Tualatin River · easy flatwater · dog friendly park nearby' },
     { latlng: [45.4133, -122.6720], title: 'Lake Oswego', sub: '🚣 Mon Jul 20 option · calm lake · easy paddle · close to home' },
   ];
-
   paddles.forEach(p => {
     L.marker(p.latlng, { icon: makeActivityIcon('🚣', '#2D5A72') })
       .addTo(map)
       .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${p.title}</div><div style="font-size:11px;color:#6B7B72;">${p.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
   });
+
+  // Hike markers + real trail lines fetched from OpenStreetMap
+  const hikeMarkers = [
+    { latlng: [45.347, -121.770], title: 'Timberline Trail → Zigzag Canyon', sub: '🥾 Fri Jul 17 · from the lodge · canyon overlook' },
+    { latlng: [45.5762, -122.1158], title: 'Multnomah Falls', sub: '🥾 Optional Sun Jul 19 · right off I-84 on the way home' },
+    { latlng: [45.5578, -122.7530], title: 'Wildwood Trail · Germantown Rd', sub: '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly' },
+  ];
+  hikeMarkers.forEach(h => {
+    L.marker(h.latlng, { icon: makeActivityIcon('🥾', '#2D5A47') })
+      .addTo(map)
+      .bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${h.title}</div><div style="font-size:11px;color:#6B7B72;">${h.sub}</div></div>`, { closeButton: false, offset: [0,-8] });
+  });
+
+  function popup(title, sub) {
+    return `<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${title}</div><div style="font-size:11px;color:#6B7B72;">${sub}</div></div>`;
+  }
+
+  async function fetchTrail(overpassQuery, color, popupHtml) {
+    try {
+      const res = await fetch('https://overpass-api.de/api/interpreter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'data=' + encodeURIComponent(overpassQuery)
+      });
+      const data = await res.json();
+      data.elements.forEach(el => {
+        if (el.geometry && el.geometry.length > 1) {
+          const latlngs = el.geometry.map(g => [g.lat, g.lon]);
+          L.polyline(latlngs, { color: '#FFFFFF', weight: 5, opacity: 0.7 }).addTo(map);
+          L.polyline(latlngs, { color, weight: 3, opacity: 1 }).addTo(map)
+            .bindPopup(popupHtml, { closeButton: false });
+        }
+      });
+    } catch(e) { console.warn('Trail fetch failed:', e); }
+  }
+
+  // Timberline Trail: segment from lodge west toward Zigzag Canyon
+  fetchTrail(
+    `[out:json];way["name"="Timberline Trail"](45.325,-121.790,45.365,-121.720);out geom;`,
+    '#4A9E6B',
+    popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · from the lodge · canyon overlook')
+  );
+
+  // Multnomah Falls Trail
+  fetchTrail(
+    `[out:json];way["name"="Multnomah Falls Trail"](45.570,-122.125,45.585,-122.108);out geom;`,
+    '#4A9E6B',
+    popup('Multnomah Falls Trail', '🥾 Optional Sun Jul 19 · right off I-84 on the way home')
+  );
+
+  // Wildwood Trail near Germantown Road (2-mile section)
+  fetchTrail(
+    `[out:json];way["name"="Wildwood Trail"](45.545,-122.770,45.572,-122.735);out geom;`,
+    '#4A9E6B',
+    popup('Wildwood Trail · Germantown Rd', '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly')
+  );
 })();
 </script>
 
