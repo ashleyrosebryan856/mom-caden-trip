@@ -305,8 +305,8 @@
   function makeActivityIcon(emoji, bg, textColor) {
     textColor = textColor || 'white';
     return L.divIcon({
-      html: `<div style="background:${bg};color:${textColor};border:2px solid white;border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,0.25);opacity:0.92;">${emoji}</div>`,
-      className: '', iconSize: [28,28], iconAnchor: [14,14], popupAnchor: [0,-16]
+      html: `<div style="background:${bg};color:${textColor};border:2.5px solid white;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 7px rgba(0,0,0,0.3);cursor:pointer;">${emoji}</div>`,
+      className: '', iconSize: [34,34], iconAnchor: [17,17], popupAnchor: [0,-20]
     });
   }
 
@@ -353,7 +353,10 @@
     return `<div style="font-family:'Inter',sans-serif;min-width:180px;"><div style="font-weight:600;font-size:13px;color:#1F3040;margin-bottom:3px;">${title}</div><div style="font-size:11px;color:#6B7B72;">${sub}</div></div>`;
   }
 
-  async function fetchTrail(overpassQuery, color, popupHtml) {
+  // Trail color: bright blue so it stands out against the green map tiles
+  const TRAIL_COLOR = '#0077CC';
+
+  async function fetchTrail(overpassQuery, popupHtml) {
     try {
       const res = await fetch('https://overpass-api.de/api/interpreter', {
         method: 'POST',
@@ -361,35 +364,36 @@
         body: 'data=' + encodeURIComponent(overpassQuery)
       });
       const data = await res.json();
+      let drawn = 0;
       data.elements.forEach(el => {
         if (el.geometry && el.geometry.length > 1) {
           const latlngs = el.geometry.map(g => [g.lat, g.lon]);
-          L.polyline(latlngs, { color: '#FFFFFF', weight: 5, opacity: 0.7 }).addTo(map);
-          L.polyline(latlngs, { color, weight: 3, opacity: 1 }).addTo(map)
+          // White outline then blue line for contrast
+          L.polyline(latlngs, { color: '#FFFFFF', weight: 8, opacity: 0.6, interactive: false }).addTo(map);
+          L.polyline(latlngs, { color: TRAIL_COLOR, weight: 5, opacity: 0.95 }).addTo(map)
             .bindPopup(popupHtml, { closeButton: false });
+          drawn++;
         }
       });
+      if (drawn === 0) console.warn('No trail geometry returned for query:', overpassQuery.slice(0,80));
     } catch(e) { console.warn('Trail fetch failed:', e); }
   }
 
   // Timberline Trail: segment from lodge west toward Zigzag Canyon
   fetchTrail(
     `[out:json];way["name"="Timberline Trail"](45.325,-121.790,45.365,-121.720);out geom;`,
-    '#4A9E6B',
     popup('Timberline Trail → Zigzag Canyon', '🥾 Fri Jul 17 · from the lodge · canyon overlook')
   );
 
   // Multnomah Falls Trail
   fetchTrail(
-    `[out:json];way["name"="Multnomah Falls Trail"](45.570,-122.125,45.585,-122.108);out geom;`,
-    '#4A9E6B',
+    `[out:json];(way["name"="Multnomah Falls Trail"](45.570,-122.130,45.585,-122.108);way["name"="Multnomah Falls Historic Highway Trail"](45.570,-122.130,45.585,-122.108););out geom;`,
     popup('Multnomah Falls Trail', '🥾 Optional Sun Jul 19 · right off I-84 on the way home')
   );
 
-  // Wildwood Trail near Germantown Road (2-mile section)
+  // Wildwood Trail near Germantown Road
   fetchTrail(
     `[out:json];way["name"="Wildwood Trail"](45.545,-122.770,45.572,-122.735);out geom;`,
-    '#4A9E6B',
     popup('Wildwood Trail · Germantown Rd', '🥾 Mon Jul 20 · Forest Park · old growth urban forest · dog friendly')
   );
 })();
@@ -1025,22 +1029,31 @@
       <div class="book-card">
         <div class="book-urgency urgency-done">✓ Confirmed</div>
         <div class="book-name">Timberline Lodge</div>
-        <div class="book-detail">Night of Fri Jul 17 · Dog-friendly room confirmed · Cascade Dining Room for dinner.</div>
-        <a href="tel:+15032722600" class="book-link link-call">503-272-2600</a>
+        <div class="book-detail">Night of Fri Jul 17 · Dog-friendly room confirmed · Cascade Dining Room for dinner · Mt. Hood at 6,000ft.</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="https://www.timberlinelodge.com" target="_blank" class="book-link link-primary">timberlinelodge.com →</a>
+          <a href="tel:+15032722600" class="book-link link-call">503-272-2600</a>
+        </div>
       </div>
 
       <div class="book-card">
         <div class="book-urgency urgency-done">✓ Confirmed</div>
-        <div class="book-name">Skamania Lodge Glamping Tents</div>
-        <div class="book-detail">Jul 18–19 · Stevenson, WA · Platform canvas tents with gorge views. Zip line and aerial park on property.</div>
-        <a href="tel:+15094272528" class="book-link link-call">509-427-2528</a>
+        <div class="book-name">Skamania Lodge Glamping</div>
+        <div class="book-detail">Jul 18–19 · Stevenson, WA · Platform canvas tents with Columbia River Gorge views.</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="https://www.skamania.com/stay/glamping/" target="_blank" class="book-link link-primary">View glamping →</a>
+          <a href="https://www.skamania.com" target="_blank" class="book-link link-call">skamania.com</a>
+        </div>
       </div>
 
       <div class="book-card">
-        <div class="book-urgency urgency-call">📞 Call to confirm</div>
-        <div class="book-name">Skamania Zip Line Course</div>
-        <div class="book-detail">Saturday Jul 18 or Sunday Jul 19 — confirm the day and time slot with Skamania when you call. Both days are open for this.</div>
-        <a href="tel:+15094272528" class="book-link link-call">509-427-2528</a>
+        <div class="book-urgency urgency-call">📞 Call to confirm day</div>
+        <div class="book-name">Skamania Zip Line & Adventures</div>
+        <div class="book-detail">Saturday Jul 18 or Sunday Jul 19 — confirm the day and time slot when you call. Zip line, aerial park, and more on property.</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="https://www.skamania.com/experiences/skamania-lodge-adventures/" target="_blank" class="book-link link-primary">View adventures →</a>
+          <a href="tel:+15094272528" class="book-link link-call">509-427-2528</a>
+        </div>
       </div>
 
       <div class="book-card">
